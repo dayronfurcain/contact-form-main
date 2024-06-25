@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { cn } from '@/lib/utils'
 
+import iconRadio from '@/assets/icon-radio-selected.svg'
+
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
@@ -18,6 +20,7 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form'
+import Message from './components/Message'
 
 const formSchema = z.object({
   firstname: z.string().min(1, { message: 'The field is required' }),
@@ -48,9 +51,10 @@ function App() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values)
-    toast(<div>A custom toast with default styling</div>, {
+    toast(<Message />, {
       duration: 5000,
-      position: 'top-center'
+      position: 'top-center',
+      unstyled: true
     })
   }
 
@@ -144,7 +148,15 @@ function App() {
                         )}
                       >
                         <FormControl>
-                          <RadioGroupItem value='general-enquiry' />
+                          {field.value === 'general-enquiry' ? (
+                            <img
+                              src={iconRadio}
+                              alt='icon-radio'
+                              className='h-4 w-4 object-cover'
+                            />
+                          ) : (
+                            <RadioGroupItem value='general-enquiry' />
+                          )}
                         </FormControl>
                         <FormLabel className='font-normal'>
                           General Enquiry
@@ -160,7 +172,15 @@ function App() {
                         )}
                       >
                         <FormControl>
-                          <RadioGroupItem value='support-request' />
+                          {field.value === 'support-request' ? (
+                            <img
+                              src={iconRadio}
+                              alt='icon-radio'
+                              className='h-4 w-4 object-cover'
+                            />
+                          ) : (
+                            <RadioGroupItem value='support-request' />
+                          )}
                         </FormControl>
                         <FormLabel className='font-normal'>
                           Support Request
@@ -198,7 +218,10 @@ function App() {
                       <Checkbox
                         checked={field.value}
                         onCheckedChange={field.onChange}
-                        className='accent-red-500'
+                        className={cn('rounded-none appearance-none', {
+                          'bg-[hsl(169,_82%,_27%)] bg-[url(./assets/icon-checkbox-check.svg)]':
+                            field.value
+                        })}
                       />
                     </FormControl>
                     <div className='space-y-1 leading-none'>
