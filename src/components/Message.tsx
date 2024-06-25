@@ -1,4 +1,3 @@
-import React from 'react'
 import iconSuccess from '@/assets/icon-success-check.svg'
 
 function Message() {
